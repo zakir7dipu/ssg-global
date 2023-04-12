@@ -1,5 +1,5 @@
-window.addEventListener('scroll',(e)=>{
-    if(document.body.getBoundingClientRect().top < 0){
+window.addEventListener('scroll', (e) => {
+    if (document.body.getBoundingClientRect().top < 0) {
         document.querySelector('.header>.menu').classList.add('sticky-menu')
     } else {
         document.querySelector('.header>.menu').classList.remove('sticky-menu')
@@ -8,7 +8,7 @@ window.addEventListener('scroll',(e)=>{
 
 
 let mySubTabButtonSwiper = document.querySelector('.mySubTabButtonSwiper');
-if(mySubTabButtonSwiper) {
+if (mySubTabButtonSwiper) {
     var swiper = new Swiper(".mySubTabButtonSwiper", {
         slidesPerView: 4,
         spaceBetween: 5,
@@ -18,13 +18,13 @@ if(mySubTabButtonSwiper) {
     let allBrandCategoryBtns = document.querySelectorAll('.brand-category-btn')
     let allBrandLinkSections = document.querySelectorAll('.tab-link')
 
-    mySubTabButtons.forEach(item=>{
-        item.addEventListener('mouseover',()=>{
+    mySubTabButtons.forEach(item => {
+        item.addEventListener('mouseover', () => {
             let selectedItem = item.dataset.bsTarget
-            allTabCategorySections.forEach(itemC=>{
+            allTabCategorySections.forEach(itemC => {
                 itemC.classList.remove('active');
             })
-            mySubTabButtons.forEach(itemB=>{
+            mySubTabButtons.forEach(itemB => {
                 itemB.classList.remove('active')
             })
             item.classList.add('active')
@@ -32,13 +32,13 @@ if(mySubTabButtonSwiper) {
         })
     })
 
-    allBrandCategoryBtns.forEach(item=>{
-        item.addEventListener('mouseover',()=>{
+    allBrandCategoryBtns.forEach(item => {
+        item.addEventListener('mouseover', () => {
             let selectedItem = item.dataset.bsTarget
-            allBrandLinkSections.forEach(itemL=>{
+            allBrandLinkSections.forEach(itemL => {
                 itemL.classList.remove('active')
             })
-            allBrandCategoryBtns.forEach(itemBC=>{
+            allBrandCategoryBtns.forEach(itemBC => {
                 itemBC.classList.remove('active')
             })
             item.classList.add('active')
@@ -55,7 +55,7 @@ var swiper = new Swiper(".myTabCategorySwiper", {
 // frontend mobile menu toggle
 if (window.innerWidth < 768) {
     let frontendMobileMenuToggle = document.getElementById('menu-toggle')
-    if(frontendMobileMenuToggle) {
+    if (frontendMobileMenuToggle) {
         frontendMobileMenuToggle.addEventListener(
             'click',
             function () {
@@ -73,41 +73,63 @@ if (window.innerWidth < 768) {
             }
         );
 
-        let mobileSubMenu = document.querySelectorAll('.has-dropdown');
+        let mobileMenuItem = document.querySelectorAll('.navigation>li');
+        let mobileSubMenuItem = document.querySelectorAll('.nav-mobile-menu > ul.navigation > li.has-dropdown > ul.sub-menu > li');
         let mobileMegaMenu = document.querySelector('.mobile-mega-menu');
 // has-dropdown
 // sub-menu
-        Array.from(mobileSubMenu).map(item=>{
-            item.addEventListener('click',(e)=>{
-                item.querySelector('.sub-menu').classList.toggle('active')
+        Array.from(mobileMenuItem).map(item => {
+            item.addEventListener('click', (e) => {
+                let submenu = e.target.closest('li').querySelector(".sub-menu")
+                let subDropdownMenu = e.target.closest('li').querySelector(".sub-dropdown-menu")
+                if (submenu && submenu.classList.contains("active")) {
+                    submenu.classList.remove("active")
+                    if (subDropdownMenu && subDropdownMenu.classList.contains("active")) {
+                        subDropdownMenu.classList.remove("active")
+                    }
+                } else if (submenu && !submenu.classList.contains("active")) {
+                    submenu.classList.add("active")
+                }
             })
-        })
+        });
+
+        Array.from(mobileSubMenuItem).map(item => {
+            item.addEventListener('click', (e) => {
+                let submenu = e.target.closest('li').querySelector(".sub-dropdown-menu")
+                if (submenu && submenu.classList.contains("active")) {
+                    submenu.classList.remove("active")
+                } else if (submenu && !submenu.classList.contains("active")) {
+                    submenu.classList.add("active")
+                }
+            })
+        });
+
 
 // mega menu
-        mobileMegaMenu.addEventListener('click', ()=>{
+        mobileMegaMenu.addEventListener('click', () => {
             let megaMenu = document.querySelector('.mobile-large-sub-menu');
             let megaMenuClose = document.querySelector('.close-mega-menu');
             megaMenu.classList.add('active')
-            megaMenuClose.addEventListener('click',()=> {
+            megaMenuClose.addEventListener('click', () => {
                 megaMenu.classList.add('close')
                 megaMenu.classList.remove('active')
-                setTimeout(()=>{
+                setTimeout(() => {
                     megaMenu.classList.remove('close')
-                },300);
+                }, 300);
             });
-            if(megaMenu.classList.contains('active')) {
+            if (megaMenu.classList.contains('active')) {
                 let brandMobileBtns = document.querySelectorAll('.mobile-tab-btn-item');
                 new Swiper(".myMegaMenuSwiper", {
                     slidesPerView: 2.5,
                     spaceBetween: 15,
                 });
-                brandMobileBtns.forEach(item=>{
-                    item.addEventListener('click',()=>{
+                brandMobileBtns.forEach(item => {
+                    item.addEventListener('click', () => {
                         let mobileSubLinks = document.querySelectorAll('.mobileSubLinks')
-                        brandMobileBtns.forEach(itemMb=>{
+                        brandMobileBtns.forEach(itemMb => {
                             itemMb.classList.remove('active')
                         })
-                        mobileSubLinks.forEach(itemMl=>{
+                        mobileSubLinks.forEach(itemMl => {
                             itemMl.classList.remove('active')
                         })
                         item.classList.add('active')
@@ -119,16 +141,16 @@ if (window.innerWidth < 768) {
 
 // disabled
         let disabledMenu = document.querySelector('.mobile-disabled');
-        disabledMenu.addEventListener('click',()=>{
+        disabledMenu.addEventListener('click', () => {
             let disabledSubMenu = document.querySelector('.mobile-disabled-sub-menu')
             let closeDisabledMenu = disabledSubMenu.querySelector('.close-disabled-menu')
             disabledSubMenu.classList.add('active')
-            closeDisabledMenu.addEventListener('click',()=> {
+            closeDisabledMenu.addEventListener('click', () => {
                 disabledSubMenu.classList.add('close')
                 disabledSubMenu.classList.remove('active')
-                setTimeout(()=>{
+                setTimeout(() => {
                     disabledSubMenu.classList.remove('close')
-                },300);
+                }, 300);
             })
         })
     }
@@ -147,29 +169,29 @@ var swiper = new Swiper(".myBrandTabsSwiper", {
 // brand category
 let brandTabs = document.querySelectorAll('section.brands>.content-tab>.content-wrapper>.brand-tabs>.myBrandTabsSwiper>.swiper-wrapper>.tabs-item');
 let brandSections = document.querySelectorAll('section.brands>.tab-content>.content-wrapper>.tab-section');
-Array.from(brandTabs).map(item=>{
-    item.addEventListener('click',(e)=>{
-        Array.from(brandTabs).map(itemD=>{
-            if(itemD.classList.contains('active-tab')){
+Array.from(brandTabs).map(item => {
+    item.addEventListener('click', (e) => {
+        Array.from(brandTabs).map(itemD => {
+            if (itemD.classList.contains('active-tab')) {
                 itemD.classList.remove('active-tab')
             }
         })
 
         let targetSection = item.dataset.bsTarget;
 
-        Array.from(brandSections).map(itemD=>{
-            if(itemD.classList.contains('active-section')){
+        Array.from(brandSections).map(itemD => {
+            if (itemD.classList.contains('active-section')) {
                 itemD.classList.remove('active-section')
             }
         })
         item.classList.add('active-tab')
-        document.getElementById(targetSection.replace("#","")).classList.add('active-section')
+        document.getElementById(targetSection.replace("#", "")).classList.add('active-section')
     })
 })
 
 // Award section
 let awardSection = document.querySelector('.myAwardSwiper')
-if(awardSection) {
+if (awardSection) {
     let awardSliderItem = 4
     let awardspaceBetween = 30
     if (window.innerWidth < 768) {
@@ -199,7 +221,7 @@ if(awardSection) {
 }
 // Client section
 let clientSection = document.querySelector('.myClientSwiper')
-if(clientSection) {
+if (clientSection) {
     let clientSliderItem = 4
     let clientSpaceBetween = 20
     if (window.innerWidth < 768) {
@@ -229,7 +251,7 @@ if(clientSection) {
 }
 // blog section
 let blogSection = document.querySelector('.myBlogSwiper')
-if(blogSection) {
+if (blogSection) {
     let blogSliderItem = 3
     if (window.innerWidth < 768) {
         blogSliderItem = 1
@@ -257,7 +279,7 @@ if(blogSection) {
 
 // journey section
 let journeySection = document.querySelector('.myJourneySwiper')
-if(journeySection) {
+if (journeySection) {
     let journeySliderItem = 2.5
     if (window.innerWidth < 768) {
         journeySliderItem = 1
@@ -283,7 +305,7 @@ if(journeySection) {
 
 // unit section
 let unitSection = document.querySelector('.myUnitSwiper')
-if(unitSection) {
+if (unitSection) {
     let unitSliderItem = 5
     if (window.innerWidth < 768) {
         unitSliderItem = 1
@@ -302,8 +324,8 @@ if(unitSection) {
 }
 // footer
 let footerMenuTab = document.querySelectorAll('footer .footer-title>.arrow');
-Array.from(footerMenuTab).map(item=>{
-    item.addEventListener('click', ()=>{
+Array.from(footerMenuTab).map(item => {
+    item.addEventListener('click', () => {
         item.classList.toggle('active')
         item.closest('div').querySelector('ul').classList.toggle('active')
     })
@@ -311,7 +333,7 @@ Array.from(footerMenuTab).map(item=>{
 
 // gallery
 let overlay = document.querySelector('#overlay');
-if(overlay) {
+if (overlay) {
     let awardCardImage = overlay.querySelector('img');
     let awardCardTitle = overlay.querySelector('.award-item-title');
     let awardCardText = overlay.querySelector('.award-item-text');
@@ -322,8 +344,8 @@ if(overlay) {
 // Hide overlay on default
 // When an image is clicked'
     let overlayBtns = document.querySelectorAll('#gallery>div>a');
-    overlayBtns.forEach((cardItem,index)=>{
-        cardItem.addEventListener('click',(e)=>{
+    overlayBtns.forEach((cardItem, index) => {
+        cardItem.addEventListener('click', (e) => {
             currentAwardItem = index
             e.preventDefault();
             // input
@@ -336,31 +358,31 @@ if(overlay) {
         })
     })
 // When the overlay is clicked
-    overlay.addEventListener('click',(e)=>{
-        if(e.target.id === 'overlay'){
+    overlay.addEventListener('click', (e) => {
+        if (e.target.id === 'overlay') {
             overlay.classList.remove('fade-in-award-card');
             overlay.classList.add('fade-out-award-card');
         }
     })
 // When next button is clicked
-    awardCardNextButton.addEventListener('click', (event)=>{
-        if(currentAwardItem >= 0 && currentAwardItem < (overlayBtns.length -1)){
+    awardCardNextButton.addEventListener('click', (event) => {
+        if (currentAwardItem >= 0 && currentAwardItem < (overlayBtns.length - 1)) {
             currentAwardItem += 1;
             awardItemChanging(currentAwardItem)
 
-        } else if(currentAwardItem === (overlayBtns.length -1)) {
+        } else if (currentAwardItem === (overlayBtns.length - 1)) {
             currentAwardItem = 0;
             awardItemChanging(currentAwardItem)
         }
     })
 // When previous button is clicked
-    awardCardPrevButton.addEventListener('click', (event)=>{
-        if(currentAwardItem <= (overlayBtns.length -1) && currentAwardItem > 0){
+    awardCardPrevButton.addEventListener('click', (event) => {
+        if (currentAwardItem <= (overlayBtns.length - 1) && currentAwardItem > 0) {
             currentAwardItem -= 1;
             awardItemChanging(currentAwardItem)
 
-        } else if(currentAwardItem === 0) {
-            currentAwardItem = (overlayBtns.length -1);
+        } else if (currentAwardItem === 0) {
+            currentAwardItem = (overlayBtns.length - 1);
             awardItemChanging(currentAwardItem)
         }
     })
@@ -368,7 +390,7 @@ if(overlay) {
     function awardItemChanging(itemIndex) {
         overlay.classList.remove('fade-in-award-card');
         overlay.classList.add('fade-out-award-card');
-        setTimeout(()=>{
+        setTimeout(() => {
             // input
             awardCardImage.src = overlayBtns[itemIndex].querySelector('img').src;
             awardCardTitle = overlayBtns[itemIndex].querySelector('.award-item-title').innerText;
@@ -376,10 +398,11 @@ if(overlay) {
             // functionality
             overlay.classList.remove('fade-out-award-card');
             overlay.classList.add('fade-in-award-card');
-        },100)
+        }, 100)
     }
+
 // When the exit button is clicked
-    awardCardExitButton.addEventListener('click',()=>{
+    awardCardExitButton.addEventListener('click', () => {
         overlay.classList.remove('fade-in-award-card');
         overlay.classList.add('fade-out-award-card');
     })
@@ -387,17 +410,17 @@ if(overlay) {
 
 // filter-gallery
 let filterGallery = document.querySelector('#filter-gallery');
-if(filterGallery) {
+if (filterGallery) {
     let filterButtons = document.querySelectorAll('.filter-tab');
     let filterItems = document.querySelectorAll('.filter-item');
 
-    filterButtons.forEach(itemT=>{
-        itemT.addEventListener('click', ()=>{
-            filterButtons.forEach(itemDT=>{
+    filterButtons.forEach(itemT => {
+        itemT.addEventListener('click', () => {
+            filterButtons.forEach(itemDT => {
                 itemDT.classList.remove('active');
             })
-            filterItems.forEach(itemDS=>{
-                if(itemDS.classList.contains('active')) {
+            filterItems.forEach(itemDS => {
+                if (itemDS.classList.contains('active')) {
                     itemDS.classList.remove('active');
                 }
             })
@@ -430,30 +453,30 @@ if(filterGallery) {
 
 // input file action
 let formFiles = document.querySelectorAll('.form-file');
-if(formFiles.length){
-    formFiles.forEach(fileInput=>{
+if (formFiles.length) {
+    formFiles.forEach(fileInput => {
         let cover = fileInput.closest('div').parentElement.querySelector('.form-file-cover')
         let showFile = fileInput.closest('div').parentElement.querySelector('.form-file-show')
         showFile.readOnly = true;
-        cover.addEventListener('click',()=>{
+        cover.addEventListener('click', () => {
             fileInput.click()
         })
-        fileInput.addEventListener('change',()=>{
+        fileInput.addEventListener('change', () => {
             showFile.value = fileInput.files[0].name
         })
     })
 }
 
 let videoActionBtns = document.querySelectorAll('.video-action-btn');
-if(videoActionBtns.length) {
-    videoActionBtns.forEach(item=>{
+if (videoActionBtns.length) {
+    videoActionBtns.forEach(item => {
 
     })
 }
 
 
 // dashboard
-if(document.getElementById('dashboard-menu-toggle')) {
+if (document.getElementById('dashboard-menu-toggle')) {
     document.getElementById('dashboard-menu-toggle').addEventListener(
         'click',
         function () {
@@ -469,8 +492,8 @@ if(document.getElementById('dashboard-menu-toggle')) {
 }
 // full screen function
 let fullscreenBtn = document.querySelector('#window-full-screen');
-if(fullscreenBtn){
-    fullscreenBtn.addEventListener('click',()=>{
+if (fullscreenBtn) {
+    fullscreenBtn.addEventListener('click', () => {
         let elem = document.querySelector('body');
         if (elem.requestFullscreen) {
             elem.requestFullscreen();
@@ -482,7 +505,7 @@ if(fullscreenBtn){
     })
 }
 // error page
-gsap.set(".error-image", { visibility: "visible" });
+gsap.set(".error-image", {visibility: "visible"});
 gsap.to("#headStripe", {
     y: 0.5,
     rotation: 1,
@@ -531,8 +554,8 @@ gsap.to("#starsBig g", {
 });
 gsap.fromTo(
     "#starsSmall g",
-    { scale: 0, transformOrigin: "50% 50%" },
-    { scale: 1, transformOrigin: "50% 50%", yoyo: true, repeat: -1, stagger: 0.1 }
+    {scale: 0, transformOrigin: "50% 50%"},
+    {scale: 1, transformOrigin: "50% 50%", yoyo: true, repeat: -1, stagger: 0.1}
 );
 gsap.to("#circlesSmall circle", {
     y: -4,
@@ -549,7 +572,7 @@ gsap.to("#circlesBig circle", {
     repeat: -1
 });
 
-gsap.set("#glassShine", { x: -68 });
+gsap.set("#glassShine", {x: -68});
 
 gsap.to("#glassShine", {
     x: 80,
